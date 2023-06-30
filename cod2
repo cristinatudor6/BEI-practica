@@ -1,0 +1,42 @@
+import paho.mqtt.client as mqtt
+import random
+
+
+# Parametri de conexiune MQTT
+mqtt_broker = "adresa_broker"
+mqtt_port = 1883
+mqtt_topic = "temperatura"
+
+
+# Funcția de tratare a evenimentului la primirea unui mesaj MQTT
+def on_message(client, userdata, msg):
+    temperatura = float(msg.payload)
+    print("Temperatura primita: ", temperatura)
+    # Aici puteți insera codul pentru a salva temperatura în baza de date
+
+
+# Inițializarea clientului MQTT
+client = mqtt.Client()
+
+
+# Setarea funcției de tratare a evenimentului la primirea unui mesaj
+client.on_message = on_message
+
+
+# Conectarea la brokerul MQTT
+client.connect(mqtt_broker, mqtt_port, 60)
+
+
+# Abonarea la topicul MQTT pentru a primi mesaje de temperatură
+client.subscribe(mqtt_topic)
+
+
+# Loop pentru a asculta mesajele MQTT
+client.loop_start()
+
+
+# Simularea trimiterii periodice a temperaturii
+while True:
+    temperatura = random.uniform(0, 100)
+    # Publicarea temperaturii pe topicul MQTT
+    client.publish(mqtt_topic, temperatura)
