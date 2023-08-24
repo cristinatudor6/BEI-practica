@@ -1,0 +1,37 @@
+//SMART HOME SENSOR SIMULATION
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to generate a random float within a given range
+float generateRandomFloat(float min, float max) {
+    return min + ((float)rand() / RAND_MAX) * (max - min);
+}
+
+int main() {
+    // Seed the random number generator with the current time
+    srand(time(NULL));
+
+    float minTemperature = 20.0; // Minimum temperature value
+    float maxTemperature = 30.0; // Maximum temperature value
+
+    float minHumidity = 40.0; // Minimum humidity value
+    float maxHumidity = 60.0; // Maximum humidity value
+
+    while (1) { // Infinite loop for continuous simulation
+        // Generate random temperature and humidity values
+        float temperature = generateRandomFloat(minTemperature, maxTemperature);
+        float humidity = generateRandomFloat(minHumidity, maxHumidity);
+
+        // Print the simulated sensor readings
+        printf("Temperature: %.2f°C\n", temperature);
+        printf("Humidity: %.2f%%\n", humidity);
+
+        // Add a delay to simulate real-time intervals between readings
+        // Adjust the delay as needed (e.g., sleep for 5 seconds)
+        // The value is in microseconds (1 second = 1000000 microseconds)
+        usleep(5000000); // Sleep for 5 seconds
+    }
+
+    return 0;
+}
